@@ -1,6 +1,6 @@
 license="MIT"
 modLoader="javafml"
-loaderVersion="[41,)"
+loaderVersion="[40,)"
 issueTrackerURL="https://github.com/AuthorName/DynamicTreesTemplate/issues"
 
 [[mods]]
@@ -18,20 +18,20 @@ Adds Dynamic Trees compatibility for Template.
 [[dependencies.dttemplate]]
     modId="forge"
     mandatory=true
-    versionRange="[41,)"
+    versionRange="[40,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.dttemplate]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19.2]"
+    versionRange="[1.18.2]"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.dttemplate]]
     modId="dynamictrees"
     mandatory=true
-    versionRange="[1.2.2,)"
+    versionRange="[1.0.4,)"
     ordering="AFTER"
     side="BOTH"
