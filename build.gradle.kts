@@ -28,7 +28,6 @@ repositories {
     }
     maven("https://harleyoconnor.com/maven")
     maven("https://squiddev.cc/maven/")
-    maven("https://maven.su5ed.dev/releases")
 }
 
 val modName = property("modName")
@@ -83,11 +82,6 @@ sourceSets.main.get().resources {
 dependencies {
     //libs
     minecraft("net.minecraftforge:forge:$mcVersion-${property("forgeVersion")}")
-    minecraftLibrary(fg.deobf("dev.su5ed.sinytra:Connector:1.0.0-beta.43+1.20.1"))
-
-    //Connector
-    runtimeOnly(fg.deobf("curse.maven:forgified-fabric-api-889079:5387432"))
-    //onlyMainRuntimeOnly(fg.deobf("curse.maven:connector-extras-913445:5287497"))
 
     //DynamicTrees
     implementation(fg.deobf("com.ferreusveritas.dynamictrees:DynamicTrees-$mcVersion:${property("dynamicTreesVersion")}"))
@@ -106,11 +100,11 @@ dependencies {
 tasks.jar {
     manifest.attributes(
         "Specification-Title" to project.name,
-        "Specification-Vendor" to "AuthorName",
+        "Specification-Vendor" to "$AuthorName",
         "Specification-Version" to "1",
         "Implementation-Title" to project.name,
         "Implementation-Version" to project.version,
-        "Implementation-Vendor" to "AuthorName",
+        "Implementation-Vendor" to "$AuthorName",
         "Implementation-Timestamp" to DateTimeFormatter.ISO_INSTANT.format(Instant.now())
     )
 
