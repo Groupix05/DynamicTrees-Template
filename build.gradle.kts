@@ -88,10 +88,10 @@ dependencies {
     //runtimeOnly(fg.deobf("com.ferreusveritas.dynamictreesplus:DynamicTreesPlus-$mcVersion:${property("dynamicTreesPlusVersion")}"))
 
     //DynmaicTrees Tools/Utilities
-    runtimeOnly(fg.deobf("curse.maven:jade-324717:5072729"))
-    runtimeOnly(fg.deobf("curse.maven:jei-238222:5101366"))
-    runtimeOnly(fg.deobf("curse.maven:cc-tweaked-282001:5118388"))
-    runtimeOnly(fg.deobf("curse.maven:suggestion-provider-fix-469647:4591193"))
+    runtimeOnly(fg.deobf("curse.maven:jade-324717:4433884"))
+    runtimeOnly(fg.deobf("curse.maven:jei-238222:4615177"))
+    runtimeOnly(fg.deobf("curse.maven:cc-tweaked-282001:5005332"))
+    runtimeOnly(fg.deobf("curse.maven:suggestion-provider-fix-469647:3832426"))
 
     //Other
     //implementation(fg.deobf("curse.maven:template-projectid:fileid"))
