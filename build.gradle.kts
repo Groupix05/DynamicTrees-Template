@@ -106,11 +106,11 @@ dependencies {
 tasks.jar {
     manifest.attributes(
         "Specification-Title" to project.name,
-        "Specification-Vendor" to "AuthorName",
+        "Specification-Vendor" to "$AuthorName",
         "Specification-Version" to "1",
         "Implementation-Title" to project.name,
         "Implementation-Version" to project.version,
-        "Implementation-Vendor" to "AuthorName",
+        "Implementation-Vendor" to "$AuthorName",
         "Implementation-Timestamp" to DateTimeFormatter.ISO_INSTANT.format(Instant.now())
     )
 
