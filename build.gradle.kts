@@ -88,10 +88,10 @@ dependencies {
     //runtimeOnly(fg.deobf("com.ferreusveritas.dynamictreesplus:DynamicTreesPlus-$mcVersion:${property("dynamicTreesPlusVersion")}"))
 
     //DynmaicTrees Tools/Utilities
-    runtimeOnly(fg.deobf("curse.maven:jade-324717:3970956"))
-    runtimeOnly(fg.deobf("curse.maven:jei-238222:4593548"))
-    runtimeOnly(fg.deobf("curse.maven:cc-tweaked-282001:4630521"))
-    runtimeOnly(fg.deobf("curse.maven:suggestion-provider-fix-469647:3623382"))
+    runtimeOnly(fg.deobf("curse.maven:jade-324717:3910873"))
+    runtimeOnly(fg.deobf("curse.maven:jei-238222:4371666"))
+    runtimeOnly(fg.deobf("curse.maven:cc-tweaked-282001:4630520"))
+    runtimeOnly(fg.deobf("curse.maven:suggestion-provider-fix-469647:3271407"))
 
     //Other
     //implementation(fg.deobf("curse.maven:template-projectid:fileid"))
@@ -118,7 +118,7 @@ java {
     withSourcesJar()
 
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
+        languageVersion.set(JavaLanguageVersion.of(8))
     }
 }
 
