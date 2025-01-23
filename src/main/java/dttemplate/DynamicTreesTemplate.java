@@ -20,7 +20,6 @@ public final class DynamicTreesTemplate {
         MOD_EVENT_BUS = eventBus;
 
         eventBus.addListener(this::gatherData);
-        NeoForgeRegistryLoader.setup(eventBus);
         MOD_EVENT_BUS = null;
     }
 

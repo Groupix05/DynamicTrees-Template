@@ -1,11 +1,11 @@
-license="MIT"
 modLoader="javafml"
-loaderVersion="${loader_version_range}"
+loaderVersion="[1,)"
+license="MIT"
 issueTrackerURL="https://github.com/AuthorName/DynamicTreesTemplate/issues"
 
 [[mods]]
 modId="dttemplate"
-version="1.0.0"
+version="${file.jarVersion}"
 displayName="Dynamic Trees for Template"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/dynamic-trees-template"
 logoFile="logo.png"
@@ -18,14 +18,14 @@ Adds Dynamic Trees compatibility for Template.
 [[dependencies.dttemplate]]
     modId="neoforge"
     type="required"
-    versionRange="${neo_version_range}"
+    versionRange="[21.1.0,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.dttemplate]]
     modId="minecraft"
     type="required"
-    versionRange="&{minecraft_version_range}"
+    versionRange="[1.21.1]"
     ordering="NONE"
     side="BOTH"
 
