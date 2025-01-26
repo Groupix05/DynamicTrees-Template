@@ -1,10 +1,11 @@
 package dttemplate;
 
 import com.dtteam.dynamictrees.api.registry.RegistryHandler;
+import com.dtteam.dynamictrees.DynamicTreesNeoForge;
 import com.dtteam.dynamictrees.treepack.Resources;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 @Mod(DynamicTreesTemplate.MOD_ID)
