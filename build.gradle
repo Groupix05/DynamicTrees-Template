@@ -1,0 +1,230 @@
+buildscript {
+    repositories {
+        maven { url = 'https://maven.minecraftforge.net' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7+'
+    }
+}
+
+plugins {
+    id 'eclipse'
+    id 'idea'
+    id 'maven-publish'
+    id "com.modrinth.minotaur" version "2.+"
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    id 'com.matthewprenger.cursegradle' version "1.4.0"
+}
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'org.spongepowered.mixin'
+
+version = "${mcVersion}-${modVersion}"
+group = "${group}"
+archivesBaseName = modId
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
+
+//just for compatilily
+sourceSets {
+    onlyMain {
+    }
+}
+
+minecraft {
+    mappings channel: 'parchment', version: "${mappingsVersion}-${mcVersion}"
+
+    // Default run configurations.
+    // These can be tweaked, removed, or duplicated as needed.
+    runs {
+        client {
+            workingDirectory project.file('run')
+
+            // Recommended logging data for a userdev environment
+            // The markers can be changed as needed.
+            // "SCAN": For mods scan.
+            // "REGISTRIES": For firing of registry events.
+            // "REGISTRYDUMP": For getting the contents of all registries.
+            property 'forge.logging.markers', 'REGISTRIES'
+
+
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+
+            // Recommended logging level for the console
+            // You can set various levels here.
+            // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
+            property 'forge.logging.console.level', 'debug'
+
+            // use for logger control
+            property 'forgegradle.runs.dev', 'true'
+
+            // Export mixin-changed classes
+            property 'mixin.debug.export', 'true'
+
+            jvmArgs "-Xmx2048M"
+            //Add mixin config to runtime
+            args '-mixin.config=' + project.getProperty('modId') + '.mixins.json'
+
+            mods {
+                "${modId}" {
+                    source sourceSets.main
+                    source sourceSets.onlyMain
+                }
+            }
+
+
+        }
+
+        server {
+            workingDirectory project.file('run')
+
+            // Recommended logging data for a userdev environment
+            // The markers can be changed as needed.
+            // "SCAN": For mods scan.
+            // "REGISTRIES": For firing of registry events.
+            // "REGISTRYDUMP": For getting the contents of all registries.
+            property 'forge.logging.markers', 'REGISTRIES'
+
+            // use for logger control
+            property 'forgegradle.runs.dev', 'true'
+
+            // Recommended logging level for the console
+            // You can set various levels here.
+            // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
+            // Export mixin-changed classes
+            property 'mixin.debug.export', 'true'
+
+            property 'forgegradle.runs.runServer', 'true'
+            // Add mixin config to runtime
+            args '-mixin.config=' + project.getProperty('modId') + '.mixins.json'
+
+            mods {
+                "${modId}" {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory project.file('run')
+
+            // Recommended logging data for a userdev environment
+            // The markers can be changed as needed.
+            // "SCAN": For mods scan.
+            // "REGISTRIES": For firing of registry events.
+            // "REGISTRYDUMP": For getting the contents of all registries.
+            property 'forge.logging.markers', 'REGISTRIES'
+
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            // Recommended logging level for the console
+            // You can set various levels here.
+            // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
+            property 'forge.logging.console.level', 'debug'
+
+            property 'mixin.debug.export', 'true'
+
+            // add runData info
+            property 'forgegradle.runs.runData', 'true'
+            property 'forgegradle.runs.dev', 'true'
+            // Add mixin config to runtime
+            args '-mixin.config=' + project.getProperty('modId') + '.mixins.json'
+
+            // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
+            args '--mod', modId, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+
+            mods {
+                "${modId}" {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
+    exclude '**/*.cache'
+}
+
+repositories {
+    maven {
+        url "https://www.cursemaven.com"
+    }
+    maven {
+        url "https://harleyoconnor.com/maven"
+    }
+    flatDir {
+        dirs("libs")
+    }
+    // Other repositories can go above or below Modrinth's. We don't need priority :)
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Modrinth"
+                url = "https://api.modrinth.com/maven"
+            }
+        }
+        forRepositories(fg.repository) // Only add this if you're using ForgeGradle, otherwise remove this line
+        filter {
+            includeGroup "maven.modrinth"
+        }
+    }
+}
+
+dependencies {
+    //libs
+    minecraft "net.minecraftforge:forge:${mcVersion}-${forgeVersion}"
+
+    //mixins
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
+    //DynamicTrees
+    implementation fg.deobf("com.ferreusveritas.dynamictrees:DynamicTrees-${mcVersion}:${dynamicTreesVersion}")
+
+    //DynmaicTrees Tools/Utilities
+    onlyMainRuntimeOnly fg.deobf("curse.maven:jade-324717:5072729")
+    onlyMainRuntimeOnly fg.deobf("curse.maven:jei-238222:5101366")
+    onlyMainRuntimeOnly fg.deobf("curse.maven:cc-tweaked-282001:5118388")
+    onlyMainRuntimeOnly fg.deobf("curse.maven:suggestion-provider-fix-469647:4591193")
+
+    //other
+    //onlyMainRuntimeOnly fg.deobf("curse.maven:template-projectid:fileid")
+}
+
+jar {
+    manifest {
+        attributes([
+                "Specification-Title"     : "${modId}",
+                "Specification-Vendor"    : "${AuthorName}",
+                "Specification-Version"   : "1", // We are version 1 of ourselves
+                "Implementation-Title"    : "${modId}",
+                "Implementation-Version"  : "${modVersion}",
+                "Implementation-Vendor"   : "${AuthorName}",
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                "MixinConfigs"            : "${modId}.mixins.json"
+        ])
+    }
+}
+
+tasks.register('deleteCache') {
+    delete 'src/generated/resources/.cache'
+}
+
+jar.dependsOn deleteCache
+
+//mixin {
+//    add sourceSets.main, "${modId}.refmap.json"
+//    // Sets up the mixin config; this gets added to run configurations and the manifest in the final jar
+//    config "${modId}.mixins.json"
+//
+//    // Enables exporting mixin-changed classes to .mixin.out in the run folder
+//    debug.export = true
+//}
+
+
