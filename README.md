@@ -2,7 +2,6 @@
  A template for DynamicTrees addons for 1.21.1 NeoForge
 
 # How to use
-THIS VERSION NEEDS CLEANING, WAIT BEFORE USING
 This template doesnt have any example for species or other. Check other addons and the wiki to know how to add them.
 With this template, you can add your trees and resources, and the mod you want in build.gradle.kts and everything should work.
 

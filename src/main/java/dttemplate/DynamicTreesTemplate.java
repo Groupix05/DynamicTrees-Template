@@ -1,8 +1,15 @@
 package dttemplate;
 
+import com.dtteam.dynamictrees.block.fruit.Fruit;
+import com.dtteam.dynamictrees.block.leaves.LeavesProperties;
+import com.dtteam.dynamictrees.block.pod.Pod;
+import com.dtteam.dynamictrees.block.soil.SoilProperties;
+import com.dtteam.dynamictrees.data.GatherDataHelper;
+import com.dtteam.dynamictrees.registry.NeoForgeRegistryHandler;
+import com.dtteam.dynamictrees.tree.family.Family;
+import com.dtteam.dynamictrees.tree.species.Species;
 import com.dtteam.dynamictrees.api.registry.RegistryHandler;
-import com.dtteam.dynamictrees.DynamicTreesNeoForge;
-import com.dtteam.dynamictrees.treepack.Resources;
+//import com.dtteam.dynamictreesplus.block.mushroom.CapProperties;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.ModContainer;
@@ -14,18 +21,21 @@ public final class DynamicTreesTemplate {
     public static final String MOD_ID = "dttemplate";
 
     public DynamicTreesTemplate(IEventBus eventBus, ModContainer container) {
-        DynamicTreesNeoForge.MOD_EVENT_BUS = eventBus;
-
         eventBus.addListener(this::gatherData);
 
-        RegistryHandler.setup(MOD_ID);
-
-        //Do not use this mod event bus outside this constructor.
-        DynamicTreesNeoForge.MOD_EVENT_BUS = null;
+        NeoForgeRegistryHandler.setup(MOD_ID, eventBus);
     }
 
     private void gatherData(final GatherDataEvent event) {
-        Resources.MANAGER.gatherData();
+        GatherDataHelper.gatherAllData(MOD_ID, event,
+                SoilProperties.REGISTRY,
+                Family.REGISTRY,
+                Species.REGISTRY,
+                LeavesProperties.REGISTRY,
+                Fruit.REGISTRY,
+                Pod.REGISTRY
+                //,CapProperties.REGISTRY
+        );
     }
 
 }
